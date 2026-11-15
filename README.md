@@ -16,7 +16,7 @@ Copie os arquivos da pasta para a raiz do repositório `Mandic82/edfapp`. O flux
 2. Use o arquivo `apps-script/Code.gs` do pacote local no projeto do Apps Script. Ele é mantido fora do repositório público porque aponta para a planilha privada.
 3. Execute `setup()` uma vez e autorize o script. A função cria e formata a aba `Resultados`.
 4. Em **Implantar > Nova implantação**, selecione **App da Web**, execute como sua conta e permita acesso a qualquer pessoa com o link. Copie o URL terminado em `/exec`.
-5. No aplicativo, clique em **Planilha** e cole o URL do Apps Script. A conexão fica salva no navegador do dispositivo.
+5. O aplicativo já vem configurado com o endpoint publicado. Se precisar trocar o endereço, clique em **Planilha** e salve o novo URL; a alteração fica no navegador daquele dispositivo.
 
 O endpoint de Apps Script precisa aceitar chamadas públicas para que estudantes enviem os resultados. Restrinja o compartilhamento da planilha somente à equipe docente. A resposta do `fetch` é opaca no navegador; o app não afirma que a linha chegou à planilha sem uma confirmação verificável.
 
