@@ -13,7 +13,7 @@ Copie os arquivos da pasta para a raiz do repositório `Mandic82/edfapp`. O flux
 ## Conectar a planilha
 
 1. Crie um projeto Apps Script independente em script.google.com.
-2. Substitua o conteúdo inicial pelo arquivo `apps-script/Code.gs` e salve. O ID da planilha `APP_EDFINANCEIRA` já está configurado no código.
+2. Use o arquivo `apps-script/Code.gs` do pacote local no projeto do Apps Script. Ele é mantido fora do repositório público porque aponta para a planilha privada.
 3. Execute `setup()` uma vez e autorize o script. A função cria e formata a aba `Resultados`.
 4. Em **Implantar > Nova implantação**, selecione **App da Web**, execute como sua conta e permita acesso a qualquer pessoa com o link. Copie o URL terminado em `/exec`.
 5. No aplicativo, clique em **Planilha** e cole o URL do Apps Script. A conexão fica salva no navegador do dispositivo.
@@ -26,4 +26,3 @@ O endpoint de Apps Script precisa aceitar chamadas públicas para que estudantes
 - O cronômetro pausa quando a aba do navegador está oculta ou quando a pausa consciente é aberta.
 - A revisão de reforço só é oferecida após 60 minutos de atividade.
 - A pontuação é formativa e deve ser interpretada junto com a observação docente e outras evidências de aprendizagem.
-

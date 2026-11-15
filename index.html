@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#10231f">
+  <meta name="description" content="Uma trilha de desafios de educação financeira para aprender, praticar e refletir.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>Missão: Dinheiro em Movimento</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#inicio" aria-label="Missão Dinheiro em Movimento, início">
+        <span class="brand-mark" aria-hidden="true">↗</span>
+        <span>laboratório <b>do dinheiro</b></span>
+      </a>
+      <div class="top-meta"><span class="live-dot"></span><span>Trilha de aprendizagem</span><span class="top-divider"></span><span>7º C · Educação Financeira</span></div>
+      <div class="toolbar-actions"><button class="quiet-button" id="sheet-config" type="button">↗ <span>Planilha</span></button><button class="quiet-button" id="sound-toggle" type="button" aria-label="Ativar ou desativar sons">♫ <span>Som</span></button></div>
+    </header>
+
+    <main id="app" class="main-content" aria-live="polite"></main>
+
+    <footer><span>Aprender também é saber escolher.</span><span>Uma jornada de <b>90 min</b> · Seu progresso fica salvo neste dispositivo</span></footer>
+  </div>
+  <dialog id="sheet-dialog" class="settings-dialog">
+    <form method="dialog" id="sheet-form">
+      <span class="eyebrow">CONFIGURAÇÃO DOCENTE</span><h2>Conectar resultados</h2>
+      <p>Cole o URL de implantação do Apps Script, terminado em <code>/exec</code>. A planilha continua privada; estudantes enviam apenas o apelido escolhido e o resultado da atividade.</p>
+      <label for="script-url">URL do Apps Script</label><input id="script-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="url">
+      <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" id="save-script" value="save">Salvar conexão</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js" defer></script>
+  <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}))}</script>
+</body>
+</html>

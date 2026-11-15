@@ -1,0 +1,14 @@
+{
+  "name": "Missão: Dinheiro em Movimento",
+  "short_name": "Dinheiro em Movimento",
+  "description": "Desafios de Educação Financeira para a turma 7º C.",
+  "lang": "pt-BR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#10231f",
+  "theme_color": "#10231f",
+  "icons": [
+    { "src": "icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
