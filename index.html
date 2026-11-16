@@ -21,19 +21,20 @@
         <span>laboratório <b>do dinheiro</b></span>
       </a>
       <div class="top-meta"><span class="live-dot"></span><span>Trilha de aprendizagem</span><span class="top-divider"></span><span>7º C · Educação Financeira</span></div>
-      <div class="toolbar-actions"><button class="quiet-button" id="sheet-config" type="button">↗ <span>Planilha</span></button><button class="quiet-button" id="sound-toggle" type="button" aria-label="Ativar ou desativar sons">♫ <span>Som</span></button></div>
+      <div class="toolbar-actions"><button class="quiet-button" id="teacher-access" type="button">⌑ <span>Acesso do professor</span></button><button class="quiet-button" id="sound-toggle" type="button" aria-label="Ativar ou desativar sons">♫ <span>Som</span></button></div>
     </header>
 
     <main id="app" class="main-content" aria-live="polite"></main>
 
     <footer><span>Aprender também é saber escolher.</span><span>Uma jornada de <b>90 min</b> · Seu progresso fica salvo neste dispositivo</span></footer>
   </div>
-  <dialog id="sheet-dialog" class="settings-dialog">
-    <form method="dialog" id="sheet-form">
-      <span class="eyebrow">CONFIGURAÇÃO DOCENTE</span><h2>Conectar resultados</h2>
-      <p>Cole o URL de implantação do Apps Script, terminado em <code>/exec</code>. A planilha continua privada; estudantes enviam apenas o apelido escolhido e o resultado da atividade.</p>
-      <label for="script-url">URL do Apps Script</label><input id="script-url" type="url" placeholder="https://script.google.com/macros/s/.../exec" autocomplete="url">
-      <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" id="save-script" value="save">Salvar conexão</button></div>
+  <dialog id="teacher-dialog" class="settings-dialog">
+    <form method="dialog" id="teacher-form">
+      <span class="eyebrow">ÁREA DO PROFESSOR</span><h2>Acesso aos resultados</h2>
+      <p>Digite a senha para abrir a planilha da turma. O acesso também depende das permissões da conta Google.</p>
+      <label for="teacher-password">Senha</label><input id="teacher-password" type="password" inputmode="numeric" maxlength="12" autocomplete="current-password" required aria-describedby="teacher-error">
+      <p id="teacher-error" role="alert" aria-live="polite"></p>
+      <div class="dialog-actions"><button class="secondary-button" value="cancel">Cancelar</button><button class="primary-button" id="open-results" value="open">Acessar resultados</button></div>
     </form>
   </dialog>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
