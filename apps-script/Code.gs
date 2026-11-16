@@ -81,7 +81,7 @@ function doPost(e) {
     const answered = boundedInt(data.answered, 0, 100);
     const percent = boundedInt(data.percent, 0, 100);
     if (!student || !data.startedAt) throw new Error('Dados necessários ausentes.');
-    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+    const ss = SpreadsheetApp.openById(getSpreadsheetId_());
     const sheet = ss.getSheetByName(TAB_NAME) || ss.insertSheet(TAB_NAME);
     ensureHeaders(sheet);
     const recordId = cleanCell(data.recordId || [student, data.startedAt, data.action, data.missionIndex ?? 'final'].join(':'), 180);
