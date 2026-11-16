@@ -212,9 +212,9 @@ const MISSION_ONE_RUBRIC=[
   {label:'Comentou benefícios ou desvantagens dessa forma de trabalho ou renda.',test:t=>/(benef[ií]ci|vantag|desvantag|malef[ií]ci|direitos?|estabilidade|flexibilidade|riscos?|prote[cç][aã]o)/i.test(t)},
   {label:'Informou a renda, o salário ou os ganhos mensais.',test:t=>/(renda|sal[aá]rio|ganhos?|rendimentos?)/i.test(t)},
   {label:'Indicou gastos fixos e explicou que se repetem ou são mensais.',test:t=>/(gastos?|despesas?|custos?)\s+fix[oa]s?/i.test(t)&&/(todo(s)? m[eê]s|mensal|se repet|recorrente|valores semelhantes)/i.test(t)},
-  {label:'Indicou gastos variáveis e explicou por que podem mudar.',test:t=>/(gastos?|despesas?|custos?)\s+vari[aá]ve[il]s?/i.test(t)&&/(mud|vari|consumo|necessidade|aument|diminu|depende)/i.test(t)},
+  {label:'Indicou gastos variáveis e explicou por que podem mudar.',test:t=>/(gastos?|despesas?|custos?)\s+vari[aá]ve[il]s?/i.test(t)&&/(mud|consumo|necessidade|aument|diminu|depende)/i.test(t)},
   {label:'Apontou se o saldo mensal ficou positivo ou negativo.',test:t=>/(saldo|resultado)/i.test(t)&&/(positivo|negativo|vermelho|super[aá]vit|d[eé]ficit|sobrou|sobra|restou|faltou)/i.test(t)},
-  {label:'Propôs uma ação adequada para o mês seguinte ou para a sobra.',test:t=>/(econom|cort|reduz|planej|reserv|invest|poup|organ|ajust|diminu|destin|aplic)/i.test(t)}
+  {label:'Propôs uma ação adequada para o mês seguinte ou para a sobra.',test:t=>/(econom|cort|reduz|planej|reserv|invest|poup|guard|organ|ajust|diminu|destin|aplic|rever|prioriz|renegoc)/i.test(t)}
 ];
 function validateMissionOneReflection(value){
   const text=String(value||'').trim(),checks=MISSION_ONE_RUBRIC.map(item=>item.test(text));
