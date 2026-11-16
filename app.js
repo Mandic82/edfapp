@@ -49,6 +49,60 @@ const missions = [
     {kind:'GRÁFICO & CÁLCULO',title:'Transformando porcentagem em reais',scenario:'Uma renda fictícia de R$ 600 foi representada no gráfico: transporte ocupa 25%.',prompt:'Qual valor corresponde ao setor de transporte?',options:['R$ 150,00','R$ 125,00','R$ 250,00','R$ 100,00'],answer:0,explain:'25% é um quarto. 600 ÷ 4 = R$ 150,00.'}
   ]}
 ];
+const reinforcementActivities = [
+  {type:'memory',title:'Memória da renda',pairs:[
+    {term:'RENDA',match:'Dinheiro que entra em um período.'},
+    {term:'SALÁRIO',match:'Pagamento recebido pelo trabalho.'},
+    {term:'AUTÔNOMO',match:'Profissional que organiza seu próprio trabalho.'},
+    {term:'FORMAL',match:'Trabalho com registro e direitos previstos.'},
+    {term:'INFORMAL',match:'Trabalho sem registro formal; a renda pode variar.'},
+    {term:'RESERVA',match:'Parte guardada para lidar com imprevistos.'}
+  ]},
+  {type:'crossword',title:'Cruzadinha do extrato',key:'EXTRATO',entries:[
+    {answer:'ENTRADA',cross:0,clue:'Movimentação que aumenta o saldo.'},
+    {answer:'PIX',cross:1,clue:'Meio de pagamento e transferência instantânea.'},
+    {answer:'CONTA',cross:3,clue:'Documento que apresenta cobranças de um serviço.'},
+    {answer:'CREDITO',cross:1,clue:'Valor lançado como entrada na conta.'},
+    {answer:'TARIFA',cross:1,clue:'Cobrança por um serviço financeiro.'},
+    {answer:'DEBITO',cross:4,clue:'Movimentação que retira valor do saldo.'},
+    {answer:'ESTORNO',cross:6,clue:'Devolução de um valor lançado anteriormente.'}
+  ]},
+  {type:'memory',title:'Memória do crédito',pairs:[
+    {term:'FATURA',match:'Resumo das compras e cobranças do período.'},
+    {term:'LIMITE',match:'Valor máximo disponível no crédito; não é renda.'},
+    {term:'VENCIMENTO',match:'Data limite indicada para pagar a fatura.'},
+    {term:'PARCELA',match:'Uma parte de um pagamento dividido.'},
+    {term:'JUROS',match:'Valor cobrado pelo uso de crédito ou atraso.'},
+    {term:'TOTAL',match:'Soma de todos os valores cobrados na fatura.'}
+  ]},
+  {type:'crossword',title:'Cruzadinha do comprovante',key:'CUPOM',entries:[
+    {answer:'COMPROVANTE',cross:0,clue:'Registro que ajuda a conferir os dados de uma compra.'},
+    {answer:'PRODUTO',cross:4,clue:'Item vendido em uma loja.'},
+    {answer:'PRECO',cross:0,clue:'Valor cobrado por um item.'},
+    {answer:'COMPRA',cross:1,clue:'Aquisição de um produto ou serviço.'},
+    {answer:'MERCADORIA',cross:0,clue:'Nome geral para produto colocado à venda.'}
+  ]},
+  {type:'memory',title:'Memória das porcentagens',pairs:[
+    {term:'PORCENTAGEM',match:'Razão ou parte calculada em cada cem.'},
+    {term:'DESCONTO',match:'Redução aplicada ao preço inicial.'},
+    {term:'AUMENTO',match:'Acréscimo calculado sobre um valor inicial.'},
+    {term:'BASE',match:'Valor inicial usado no cálculo percentual.'},
+    {term:'TAXA',match:'Percentual aplicado em uma situação.'},
+    {term:'PREÇO FINAL',match:'Valor depois de aplicar desconto ou acréscimo.'}
+  ]},
+  {type:'crossword',title:'Cruzadinha do orçamento',key:'ORCAMENTO',entries:[
+    {answer:'OBJETIVO',cross:0,clue:'Meta que orienta uma decisão de planejamento.'},
+    {answer:'RENDA',cross:0,clue:'Dinheiro que entra em determinado período.'},
+    {answer:'CONTA',cross:0,clue:'Despesa ou cobrança que precisa ser planejada.'},
+    {answer:'META',cross:1,clue:'Resultado que uma pessoa pretende alcançar.'},
+    {answer:'PLANEJAMENTO',cross:7,clue:'Organização antecipada de renda, gastos e objetivos.'},
+    {answer:'RESERVA',cross:1,clue:'Valor separado para um objetivo ou imprevisto.'},
+    {answer:'NECESSIDADE',cross:0,clue:'Algo importante para o bem-estar ou a rotina.'},
+    {answer:'TOTAL',cross:0,clue:'Resultado da soma de todas as partes.'},
+    {answer:'ECONOMIA',cross:2,clue:'Ato de usar recursos com cuidado e planejamento.'}
+  ]}
+];
+
 const participants = [
   'AISLA YASMIM DA SILVA ANDRADE','ANA CAROLINA DOS SANTOS SANT ANA','ANA JULIA DA SILVA','ANA LIVIA CHOAN BERTACHI',
   'AYRTON GUERRERO BATISTA SCHMIDT','BEATRIZ BARBOSA DA SILVA','BRUCE AMORIM FERREIRA DE JESUS','CARLOS EDUARDO LATORRE CORREIA RODRIGUES',
