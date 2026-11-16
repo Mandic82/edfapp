@@ -242,7 +242,7 @@ const MISSION_TWO_RUBRIC=[
   {label:'Explicou por que o aluguel pode ser considerado gasto fixo.',test:t=>/aluguel/i.test(t)&&/(fix[oa]|mensal|todo m[eê]s|se repet|recorrente|valor acordado)/i.test(t)},
   {label:'Explicou os gastos variáveis ou eventuais e por que variam.',test:t=>/(energia|supermercado|mercado|lazer)/i.test(t)&&/(vari[aá]ve[il]|eventual|consumo|quantidade|necessidade|muda|mudam|depende)/i.test(t)},
   {label:'Mencionou o saldo final de R$ 870,00, comentou o resultado e avaliou a administração de Carlos.',test:t=>/870/.test(t)&&/(saldo|sobrou|sobra|positiv|restou)/i.test(t)&&/carlos/i.test(t)&&/(administr|bem|respons[aá]vel|planej|cuidad|poderia|melhor|organ|corret)/i.test(t)},
-  {label:'Escreveu em texto corrido, com pelo menos duas frases, sem apenas listar valores.',test:t=>(t.match(/[.!?](?:\\s|$)/g)||[]).length>=2&&!/^\\s*(?:[-•*]|\\d+[.)])\\s/m.test(t)}
+  {label:'Escreveu em texto corrido, com pelo menos duas frases, sem apenas listar valores.',test:t=>(t.match(/[.!?](?:\s|$)/g)||[]).length>=2&&!/^\s*(?:[-•*]|\d+[.)])\s/m.test(t)}
 ];
 function validateMissionTwoReflection(value){
   const text=String(value||'').trim(),checks=MISSION_TWO_RUBRIC.map(item=>item.test(text));
