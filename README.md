@@ -29,3 +29,6 @@ O endpoint de Apps Script precisa aceitar chamadas públicas para que estudantes
 
 
 Cada missão termina com uma atividade de fixação: jogo da memória ou cruzadinha com conceitos do tema. A atividade deve ser concluída antes do registro da reflexão e do avanço.
+
+
+A primeira missão permite avanço antecipado após o jogo de fixação quando o estudante registra uma resposta com pelo menos 500 caracteres e contempla os oito itens da rubrica. O tempo total mínimo de 90 minutos permanece aplicado no encerramento da jornada.
