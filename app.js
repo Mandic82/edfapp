@@ -115,7 +115,7 @@ const participants = [
   'VICTOR SHENG ZHE ZHU','WILLYAN SOUZA NASCIMENTO'
 ];
 const CLASS_NAME='7º C';
-const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycbxL57Ayd1Vza-WP3SFVasmGoZYCaZpkP2BPNrTr5AKlSneyZAyqoB7Am5MTkFUnbUYwSQ/exec', TEACHER_PASSWORD='131313', RESULTS_SHEET_URL='https://docs.google.com/spreadsheets/d/1YUrsuxgdS8AHe1DoraZO6HM7j3ig1cuEdo_Ni76Lz_8/edit?gid=0#gid=0';
+const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycbxL57Ayd1Vza-WP3SFVasmGoZYCaZpkP2BPNrTr5AKlSneyZAyqoB7Am5MTkFUnbUYwSQ/exec', RESULTS_SHEET_URL='https://docs.google.com/spreadsheets/d/1YUrsuxgdS8AHe1DoraZO6HM7j3ig1cuEdo_Ni76Lz_8/edit?gid=0#gid=0';
 let state=null, tickHandle=null, toastHandle=null, soundOn=false, soundContext=null, inFlightReports=new Set();
 const app=document.getElementById('app');
 function freshState(name){return {name,startedAt:Date.now(),elapsed:0,activeMission:0,answers:[],missionStartedAt:Date.now(),missionElapsed:0,reviewDone:false,activitiesDone:[],miniGames:{},reportedMissions:[],reflections:{},completed:false,lastSaved:Date.now()}}
@@ -256,6 +256,7 @@ function updateMissionGateUI(){
   if(!state)return;
   const idx=state.activeMission,reflection=document.querySelector('#reflection')?.value||state.reflections[idx]||'';
   const gateState=missionGateState(idx,reflection),gate=document.querySelector('[data-gate]'),button=document.querySelector('#next-mission');
+  if(gateState.canAdvance&&state.answers.filter(a=>a.mission===idx).length===missions[idx].challenges.length&&state.activitiesDone.includes(idx))reportMissionCompletion(idx);
   if(idx<2){
     const validation=gateState.validation,rubric=idx===0?MISSION_ONE_RUBRIC:MISSION_TWO_RUBRIC,count=document.querySelector('[data-char-count]');
     if(count)count.textContent=String(validation.length);
@@ -374,10 +375,32 @@ function csvToTeacherResults(text){
     answers:parse(r[col('Respostas (JSON)',8)],[]),reflections:parse(r[col('Reflexões (JSON)',9)],{}),review:r[col('Revisão após 1h',10)]||'',recordType:r[col('Tipo de registro',11)]||'Jornada completa',mission:r[col('Missão',12)]||'Todas as missões'
   })).reverse();
 }
-function renderTeacherDashboard(){
-  app.innerHTML='<section class="teacher-dashboard"><div class="teacher-dashboard-head"><div><span class="eyebrow">ÁREA DO PROFESSOR · 7º C</span><h1>Painel de resultados</h1><p>Consulte os envios da turma e acompanhe os temas que merecem reforço.</p></div><div class="teacher-actions"><button class="secondary-button" id="teacher-back">Voltar ao início</button></div></div><div class="teacher-import-card"><div><h2>Atualizar dados do painel</h2><p>Abra a planilha, baixe a aba Resultados em CSV e selecione o arquivo aqui. A análise acontece neste dispositivo.</p></div><div class="teacher-actions"><a class="secondary-button" href="'+RESULTS_SHEET_URL+'" target="_blank" rel="noopener noreferrer">Abrir planilha ↗</a><label class="primary-button file-button" for="teacher-csv">Importar CSV</label><input id="teacher-csv" type="file" accept=".csv,text/csv" hidden></div></div><div id="teacher-panel-content"><div class="teacher-empty"><div class="empty-mark">↥</div><h2>Carregue os resultados</h2><p>Depois de importar o CSV da planilha, você verá os indicadores, a análise por missão e os registros individuais.</p></div></div></section>';
+function renderTeacherDashboard(password){
+  app.innerHTML='<section class="teacher-dashboard"><div class="teacher-dashboard-head"><div><span class="eyebrow">ÁREA DO PROFESSOR · 7º C</span><h1>Painel de resultados</h1><p>Resumo atualizado das missões e dos registros da turma.</p></div><div class="teacher-actions"><button class="secondary-button" id="teacher-back">Voltar ao início</button></div></div><div class="teacher-import-card"><div><h2>Resultados da turma</h2><p>Os dados são consultados diretamente na planilha protegida pelo Apps Script.</p></div><div class="teacher-actions"><button class="secondary-button" id="teacher-refresh">Atualizar painel</button></div></div><div id="teacher-panel-content"><div class="teacher-empty"><div class="empty-mark">↻</div><h2>Carregando resultados</h2><p>Consultando os registros da turma com acesso autorizado.</p></div></div></section>';
   document.querySelector('#teacher-back').onclick=renderHome;
-  document.querySelector('#teacher-csv').onchange=async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{const rows=csvToTeacherResults(await file.text());renderTeacherResults(rows,file.name)}catch(err){document.querySelector('#teacher-panel-content').innerHTML='<div class="teacher-empty"><h2>Não consegui ler esse arquivo</h2><p>'+escapeHtml(err.message||'Confira se você escolheu o CSV da aba Resultados.')+'</p></div>'}};
+  document.querySelector('#teacher-refresh').onclick=()=>loadTeacherResults(password);
+  loadTeacherResults(password);
+}
+function loadTeacherResults(password){
+  const host=document.querySelector('#teacher-panel-content');
+  if(!host)return;
+  host.innerHTML='<div class="teacher-empty"><div class="empty-mark">↻</div><h2>Atualizando painel</h2><p>Buscando os registros mais recentes.</p></div>';
+  const callback='teacherResults_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+  const params=new URLSearchParams({action:'teacherResults',password,callback});
+  const script=document.createElement('script');
+  const cleanup=()=>{delete window[callback];script.remove()};
+  const timer=setTimeout(()=>{cleanup();const target=document.querySelector('#teacher-panel-content');if(target)target.innerHTML='<div class="teacher-empty"><h2>Consulta demorou demais</h2><p>Verifique sua conexão e tente atualizar o painel.</p></div>'},20000);
+  window[callback]=data=>{
+    clearTimeout(timer);cleanup();
+    const target=document.querySelector('#teacher-panel-content');
+    if(!target)return;
+    if(!data||!data.ok){target.innerHTML='<div class="teacher-empty"><h2>Não foi possível acessar os resultados</h2><p>'+escapeHtml(data?.error||'Confira a senha e a configuração do Apps Script.')+'</p></div>';return}
+    if(!Array.isArray(data.rows)||!data.rows.length){target.innerHTML='<div class="teacher-empty"><div class="empty-mark">↗</div><h2>Nenhum resultado registrado ainda</h2><p>Quando os estudantes concluírem missões, os registros aparecerão aqui.</p></div>';return}
+    renderTeacherResults(data.rows,'Consulta atualizada em '+new Date().toLocaleString('pt-BR'));
+  };
+  script.onerror=()=>{clearTimeout(timer);cleanup();const target=document.querySelector('#teacher-panel-content');if(target)target.innerHTML='<div class="teacher-empty"><h2>Falha na consulta</h2><p>O Apps Script precisa estar implantado com a versão que libera a consulta autenticada do painel.</p></div>'};
+  script.src=SCRIPT_DEFAULT_URL+'?'+params.toString();
+  document.head.appendChild(script);
 }
 function renderTeacherResults(rows,fileName){
   const host=document.querySelector('#teacher-panel-content');
@@ -395,7 +418,7 @@ function renderTeacherResults(rows,fileName){
   document.querySelector('#teacher-search').oninput=e=>{const q=e.target.value.toLocaleLowerCase('pt-BR');document.querySelectorAll('#teacher-table-body tr').forEach(tr=>tr.hidden=!tr.textContent.toLocaleLowerCase('pt-BR').includes(q))};
 }
 document.querySelector('#teacher-access').onclick=()=>{document.querySelector('#teacher-password').value='';document.querySelector('#teacher-error').textContent='';document.querySelector('#teacher-dialog').showModal();document.querySelector('#teacher-password').focus()};
-document.querySelector('#teacher-form').addEventListener('submit',e=>{if(e.submitter?.id==='open-results'){e.preventDefault();const input=document.querySelector('#teacher-password'),error=document.querySelector('#teacher-error');if(input.value!==TEACHER_PASSWORD){error.textContent='Senha incorreta. Tente novamente.';input.value='';input.focus();return}document.querySelector('#teacher-dialog').close();input.value='';renderTeacherDashboard()}});
+document.querySelector('#teacher-form').addEventListener('submit',e=>{if(e.submitter?.id==='open-results'){e.preventDefault();const input=document.querySelector('#teacher-password'),error=document.querySelector('#teacher-error'),password=input.value.trim();if(!password){error.textContent='Digite a senha para continuar.';return}document.querySelector('#teacher-dialog').close();input.value='';error.textContent='';renderTeacherDashboard(password)}});
 window.addEventListener('online',flushReportQueue);
 flushReportQueue();
 renderHome();
