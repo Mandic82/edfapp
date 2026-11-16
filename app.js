@@ -115,7 +115,7 @@ const participants = [
   'VICTOR SHENG ZHE ZHU','WILLYAN SOUZA NASCIMENTO'
 ];
 const CLASS_NAME='7º C';
-const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycby5390MJeqLOqbD6n0sMFzFUdimQLmFpVRC2Q7yvozfdeGyD_WmrF1RQ7LiaHQ2j2nZcA/exec';
+const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycby2Pjr_ooXxP7AXBTjMeggkWdwLjsPn6se_cXPJBiE9NtOAV4qfAOaqcfbT9CKOu3p14A/exec';
 let state=null, tickHandle=null, toastHandle=null, soundOn=false, soundContext=null, inFlightReports=new Set();
 const app=document.getElementById('app');
 function blockPastedReflectionText(event){
