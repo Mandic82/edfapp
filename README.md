@@ -1,6 +1,6 @@
 # Missão: Dinheiro em Movimento
 
-Aplicativo web de desafios formativos para a turma 7º C, baseado no material de Educação Financeira do 4º bimestre. São seis missões sobre renda, extrato, fatura, cupom fiscal, porcentagem, orçamento e gráficos de setores.
+Aplicativo web de desafios formativos para a turma 7º C, baseado no material de Educação Financeira do 4º bimestre. São seis missões com 36 desafios sobre renda, extrato, fatura, cupom fiscal, porcentagem, orçamento e gráficos de setores.
 
 ## Executar
 
