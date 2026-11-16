@@ -26,3 +26,6 @@ O endpoint de Apps Script precisa aceitar chamadas públicas para que estudantes
 - O cronômetro pausa quando a aba do navegador está oculta ou quando a pausa consciente é aberta.
 - A revisão de reforço só é oferecida após 60 minutos de atividade.
 - A pontuação é formativa e deve ser interpretada junto com a observação docente e outras evidências de aprendizagem.
+
+
+Cada missão termina com uma atividade de fixação: jogo da memória ou cruzadinha com conceitos do tema. A atividade deve ser concluída antes do registro da reflexão e do avanço.
