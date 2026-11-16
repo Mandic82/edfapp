@@ -35,4 +35,4 @@ Cada missão termina com uma atividade de fixação: jogo da memória ou cruzadi
 
 A primeira missão permite avanço antecipado após o jogo de fixação quando o estudante registra uma resposta com pelo menos 500 caracteres e contempla os oito itens da rubrica. O tempo total mínimo de 90 minutos permanece aplicado no encerramento da jornada.
 
-A segunda missão também permite avanço antecipado após a cruzadinha quando a resposta narrativa contempla os seis critérios da análise do extrato de Carlos.
+A segunda missão também permite avanço antecipado após a cruzadinha quando a resposta narrativa contempla os seis critérios da análise do extrato de Carlos. A terceira missão usa o caso do efeito bola de neve da fatura de Marina; as missões 4 a 6 também encerram com produções de texto próprias para cupom fiscal, porcentagem e orçamento. Cada missão exibe critérios de validação, e a resposta completa permite avanço antecipado sem remover o mínimo total de 90 minutos.
