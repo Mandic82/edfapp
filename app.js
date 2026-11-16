@@ -272,10 +272,10 @@ const MISSION_FIVE_RUBRIC=[
   {label:'Justificou a escolha considerando o preço final e respondeu em texto corrido.',test:t=>/(escolh|decid|compensa|vantaj|menor|barat|custo)/i.test(t)&&(t.match(/[.!?](?:\s|$)/g)||[]).length>=2&&!/^\s*(?:[-•*]|\d+[.)])\s/m.test(t)}
 ];
 const MISSION_SIX_RUBRIC=[
-  {label:'Identificou a renda mensal de R$ 2.400,00.',test:t=>/2400/.test(t)&&/(renda|receb|sal[aá]rio|entrada)/i.test(t)},
-  {label:'Somou os gastos fixos em R$ 1.170,00 e explicou por que se repetem.',test:t=>/1170/.test(t)&&/(fix[oa]|aluguel|internet|transporte)/i.test(t)&&/(mensal|todo m[eê]s|repet|recorrent|fix[oa])/i.test(t)},
-  {label:'Somou os gastos variáveis em R$ 1.390,00 e explicou por que podem mudar.',test:t=>/1390/.test(t)&&/(vari[aá]ve[il]|mercado|energia|lazer|roupa)/i.test(t)&&/(mud|consumo|necessidade|depende|vari[aá]ve[il])/i.test(t)},
-  {label:'Concluiu que as despesas são R$ 2.560,00 e há déficit de R$ 160,00.',test:t=>/2560/.test(t)&&/160/.test(t)&&/(negativ|d[eé]ficit|falt|vermelho|despesa|gasto)/i.test(t)},
+  {label:'Identificou a renda mensal de R$ 2.400,00.',test:t=>/2[.,\s]?400/.test(t)&&/(renda|receb|sal[aá]rio|entrada)/i.test(t)},
+  {label:'Somou os gastos fixos em R$ 1.170,00 e explicou por que se repetem.',test:t=>/1[.,\s]?170/.test(t)&&/(fix[oa]|aluguel|internet|transporte)/i.test(t)&&/(mensal|todo m[eê]s|repet|recorrent|fix[oa])/i.test(t)},
+  {label:'Somou os gastos variáveis em R$ 1.390,00 e explicou por que podem mudar.',test:t=>/1[.,\s]?390/.test(t)&&/(vari[aá]ve[il]|mercado|energia|lazer|roupa)/i.test(t)&&/(mud|consumo|necessidade|depende|vari[aá]ve[il])/i.test(t)},
+  {label:'Concluiu que as despesas são R$ 2.560,00 e há déficit de R$ 160,00.',test:t=>/2[.,\s]?560/.test(t)&&/160/.test(t)&&/(negativ|d[eé]ficit|falt|vermelho|despesa|gasto)/i.test(t)},
   {label:'Propôs uma redução concreta de pelo menos R$ 160,00 para equilibrar o mês seguinte.',test:t=>/(reduz|cort|diminu|econom|ajust|rever)/i.test(t)&&/(160|100|60|lazer|roupa|vestu[aá]rio|mercado|gasto)/i.test(t)},
   {label:'Respondeu em texto corrido, com pelo menos duas frases.',test:t=>(t.match(/[.!?](?:\s|$)/g)||[]).length>=2&&!/^\s*(?:[-•*]|\d+[.)])\s/m.test(t)}
 ];
