@@ -115,7 +115,7 @@ const participants = [
   'VICTOR SHENG ZHE ZHU','WILLYAN SOUZA NASCIMENTO'
 ];
 const CLASS_NAME='7º C';
-const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycbxL57Ayd1Vza-WP3SFVasmGoZYCaZpkP2BPNrTr5AKlSneyZAyqoB7Am5MTkFUnbUYwSQ/exec', RESULTS_SHEET_URL='https://docs.google.com/spreadsheets/d/1YUrsuxgdS8AHe1DoraZO6HM7j3ig1cuEdo_Ni76Lz_8/edit?gid=0#gid=0';
+const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycbxL57Ayd1Vza-WP3SFVasmGoZYCaZpkP2BPNrTr5AKlSneyZAyqoB7Am5MTkFUnbUYwSQ/exec';
 let state=null, tickHandle=null, toastHandle=null, soundOn=false, soundContext=null, inFlightReports=new Set();
 const app=document.getElementById('app');
 function freshState(name){return {name,startedAt:Date.now(),elapsed:0,activeMission:0,answers:[],missionStartedAt:Date.now(),missionElapsed:0,reviewDone:false,activitiesDone:[],miniGames:{},reportedMissions:[],reflections:{},completed:false,lastSaved:Date.now()}}
