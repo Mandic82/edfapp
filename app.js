@@ -367,7 +367,8 @@ function updateMissionGateUI(){
   if(!state)return;
   const idx=state.activeMission,reflection=document.querySelector('#reflection')?.value||state.reflections[idx]||'';
   const gateState=missionGateState(idx,reflection),gate=document.querySelector('[data-gate]'),button=document.querySelector('#next-mission');
-  if(gateState.canAdvance&&state.answers.filter(a=>a.mission===idx).length===missions[idx].challenges.length&&state.activitiesDone.includes(idx))reportMissionCompletion(idx);
+  // Registra a resposta dissertativa assim que estiver validada; o tempo mínimo continua valendo somente para avançar.
+  if(gateState.validation.complete&&state.answers.filter(a=>a.mission===idx).length===missions[idx].challenges.length&&state.activitiesDone.includes(idx))reportMissionCompletion(idx);
   if(idx<missions.length){
     const validation=gateState.validation,rubric=MISSION_RUBRICS[idx],count=document.querySelector('[data-char-count]');
     if(count)count.textContent=String(validation.length);
