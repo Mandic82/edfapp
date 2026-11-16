@@ -267,7 +267,7 @@ const MISSION_FOUR_RUBRIC=[
 const MISSION_FIVE_RUBRIC=[
   {label:'Calculou que 15% de R$ 240,00 corresponde a R$ 36,00.',test:t=>/15\s*%/.test(t)&&/240/.test(t)&&/36/.test(t)},
   {label:'Encontrou o preço da Loja A com desconto: R$ 204,00.',test:t=>/204/.test(t)},
-  {label:'Comparou com a Loja B e concluiu que ela custa R$ 11,00 menos.',test:t=>/215/.test(t)&&/11/.test(t)&&/(loja b|loja B|b custa|mais barato|menor|econom)/i.test(t)},
+  {label:'Comparou os preços e concluiu que a Loja A custa R$ 11,00 menos que a Loja B.',test:t=>/215/.test(t)&&/11/.test(t)&&/(loja a|a custa|204|menor|mais barato|econom)/i.test(t)},
   {label:'Explicou que a porcentagem do desconto é calculada sobre o preço inicial.',test:t=>/(porcent|15\s*%)/i.test(t)&&/(pre[cç]o inicial|valor inicial|240|base|sobre o pre[cç]o)/i.test(t)},
   {label:'Justificou a escolha considerando o preço final e respondeu em texto corrido.',test:t=>/(escolh|decid|compensa|vantaj|menor|barat|custo)/i.test(t)&&(t.match(/[.!?](?:\s|$)/g)||[]).length>=2&&!/^\s*(?:[-•*]|\d+[.)])\s/m.test(t)}
 ];
