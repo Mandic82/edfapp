@@ -33,6 +33,6 @@ As conclusões parciais de missão e a jornada completa são registradas em linh
 Cada missão termina com uma atividade de fixação: jogo da memória ou cruzadinha com conceitos do tema. A atividade deve ser concluída antes do registro da reflexão e do avanço.
 
 
-A primeira missão permite avanço antecipado após o jogo de fixação quando o estudante registra uma resposta com pelo menos 500 caracteres e contempla os oito itens da rubrica. O tempo total mínimo de 90 minutos permanece aplicado no encerramento da jornada.
+Todas as seis missões exigem que o estudante conclua a atividade escrita e atenda à rubrica para encerrá-las. Cada missão mantém 15 minutos mínimos; na última, a jornada também precisa completar 90 minutos. As respostas podem ser revisadas, e os critérios usam variações de termos e formatos numéricos comuns.
 
-A segunda missão também permite avanço antecipado após a cruzadinha quando a resposta narrativa contempla os seis critérios da análise do extrato de Carlos. A terceira missão usa o caso do efeito bola de neve da fatura de Marina; as missões 4 a 6 também encerram com produções de texto próprias para cupom fiscal, porcentagem e orçamento. Cada missão exibe critérios de validação, e a resposta completa permite avanço antecipado sem remover o mínimo total de 90 minutos.
+Colar ou arrastar texto para o campo de resposta está bloqueado; o estudante deve digitar a produção no teclado. A terceira missão usa o caso do efeito bola de neve da fatura de Marina; as missões 4 a 6 também encerram com produções de texto próprias para cupom fiscal, porcentagem e orçamento. Cada missão exibe critérios de validação, e a resposta completa permite avanço antecipado sem remover o mínimo total de 90 minutos.
