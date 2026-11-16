@@ -308,10 +308,10 @@ function validatesMissionFiveComparison(value){
   const bGroup='(?:loja b|opcao b|produto b|a outra loja)';
   const cheaper='(?:mais barata|mais em conta|custa menos|menor|mais economica|mais vantajosa)';
   const moreExpensive='(?:mais cara|mais caro|custa mais|maior|mais elevada)';
-  const aCheaper=new RegExp(aGroup+'.{0,60}'+cheaper+'|'+cheaper+'.{0,60}'+aGroup).test(n);
-  const bMore=new RegExp(bGroup+'.{0,60}'+moreExpensive+'|'+moreExpensive+'.{0,60}'+bGroup).test(n);
-  const bCheaper=new RegExp(bGroup+'.{0,60}'+cheaper+'|'+cheaper+'.{0,60}'+bGroup).test(n);
-  const aMore=new RegExp(aGroup+'.{0,60}'+moreExpensive+'|'+moreExpensive+'.{0,60}'+aGroup).test(n);
+  const aCheaper=new RegExp(aGroup+'.{0,35}'+cheaper+'|'+cheaper+'.{0,35}'+aGroup).test(n);
+  const bMore=new RegExp(bGroup+'.{0,35}'+moreExpensive+'|'+moreExpensive+'.{0,35}'+bGroup).test(n);
+  const bCheaper=new RegExp(bGroup+'.{0,35}'+cheaper+'|'+cheaper+'.{0,35}'+bGroup).test(n);
+  const aMore=new RegExp(aGroup+'.{0,35}'+moreExpensive+'|'+moreExpensive+'.{0,35}'+aGroup).test(n);
   return (aCheaper||bMore)&&!bCheaper&&!aMore;
 }
 const MISSION_FIVE_RUBRIC=[
