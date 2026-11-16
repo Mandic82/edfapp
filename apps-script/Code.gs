@@ -4,7 +4,7 @@
  * A planilha recebe nome do participante, turma, duração, resultado, respostas e reflexões.
  */
 const TAB_NAME = 'Resultados';
-const SPREADSHEET_ID = '1YUrsuxgdS8AHe1DoraZO6HM7j3ig1cuEdo_Ni76Lz_8';
+const MAX_TEACHER_ROWS = 5000;
 const HEADERS = [
   'Recebido em', 'Turma', 'Estudante', 'Início da sessão', 'Duração (segundos)',
   'Acertos', 'Respondidas', 'Aproveitamento (%)', 'Respostas (JSON)',
@@ -12,7 +12,7 @@ const HEADERS = [
 ];
 
 function setup() {
-  const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
+  const ss = SpreadsheetApp.openById(getSpreadsheetId_());
   let sheet = ss.getSheetByName(TAB_NAME);
   if (!sheet) sheet = ss.insertSheet(TAB_NAME);
   ensureHeaders(sheet);
@@ -22,9 +22,49 @@ function setup() {
   return `A aba ${TAB_NAME} está pronta.`;
 }
 
-function doGet() {
-  return ContentService.createTextOutput(JSON.stringify({ ok: true, service: 'Missão: Dinheiro em Movimento' }))
-    .setMimeType(ContentService.MimeType.JSON);
+function doGet(e) {
+  const params = e && e.parameter ? e.parameter : {};
+  if (params.action !== 'teacherResults') {
+    return json({ ok: true, service: 'Missão: Dinheiro em Movimento' });
+  }
+  const callback = String(params.callback || '');
+  if (!/^[A-Za-z_$][A-Za-z0-9_$]{0,79}$/.test(callback)) {
+    return json({ ok: false, error: 'Consulta inválida.' });
+  }
+  const expected = PropertiesService.getScriptProperties().getProperty('TEACHER_PASSWORD');
+  if (!expected || String(params.password || '') !== expected) {
+    return jsonp({ ok: false, error: 'Senha incorreta ou painel ainda não configurado.' }, callback);
+  }
+  try {
+    const ss = SpreadsheetApp.openById(getSpreadsheetId_());
+    const sheet = ss.getSheetByName(TAB_NAME);
+    if (!sheet || sheet.getLastRow() < 2) return jsonp({ ok: true, rows: [] }, callback);
+    const width = sheet.getLastColumn();
+    const values = sheet.getRange(1, 1, sheet.getLastRow(), width).getDisplayValues();
+    const headers = values[0].map(value => String(value).trim());
+    const col = (name, fallback) => {
+      const index = headers.indexOf(name);
+      return index < 0 ? fallback : index;
+    };
+    const rows = values.slice(Math.max(1, values.length - MAX_TEACHER_ROWS)).map(row => ({
+      receivedAt: row[col('Recebido em', 0)] || '',
+      className: row[col('Turma', 1)] || '',
+      student: row[col('Estudante', 2)] || '',
+      startedAt: row[col('Início da sessão', 3)] || '',
+      durationSeconds: boundedInt(row[col('Duração (segundos)', 4)], 0, 86400),
+      correct: boundedInt(row[col('Acertos', 5)], 0, 100),
+      answered: boundedInt(row[col('Respondidas', 6)], 0, 100),
+      percent: boundedInt(row[col('Aproveitamento (%)', 7)], 0, 100),
+      answers: parseJsonCell_(row[col('Respostas (JSON)', 8)], []),
+      reflections: parseJsonCell_(row[col('Reflexões (JSON)', 9)], {}),
+      review: row[col('Revisão após 1h', 10)] || '',
+      recordType: row[col('Tipo de registro', 11)] || 'Jornada completa',
+      mission: row[col('Missão', 12)] || 'Todas as missões'
+    })).filter(row => row.student).reverse();
+    return jsonp({ ok: true, rows }, callback);
+  } catch (err) {
+    return jsonp({ ok: false, error: 'Não foi possível consultar os resultados.' }, callback);
+  }
 }
 
 function doPost(e) {
@@ -93,6 +133,21 @@ function boundedInt(value, min, max) {
   const n = Number(value);
   if (!Number.isFinite(n)) return min;
   return Math.min(max, Math.max(min, Math.round(n)));
+}
+
+function getSpreadsheetId_() {
+  const id = PropertiesService.getScriptProperties().getProperty('SPREADSHEET_ID');
+  if (!id) throw new Error('Configure a propriedade SPREADSHEET_ID do projeto.');
+  return id;
+}
+
+function parseJsonCell_(value, fallback) {
+  try { return JSON.parse(value || ''); } catch (err) { return fallback; }
+}
+
+function jsonp(value, callback) {
+  return ContentService.createTextOutput(callback + '(' + JSON.stringify(value) + ');')
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
 }
 
 function json(value) {
