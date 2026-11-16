@@ -60,7 +60,7 @@ const reinforcementActivities = [
   ]},
   {type:'crossword',title:'Cruzadinha do extrato',key:'EXTRATO',entries:[
     {answer:'ENTRADA',cross:0,clue:'Movimentação que aumenta o saldo.'},
-    {answer:'PIX',cross:1,clue:'Meio de pagamento e transferência instantânea.'},
+    {answer:'PIX',cross:2,clue:'Meio de pagamento e transferência instantânea.'},
     {answer:'CONTA',cross:3,clue:'Documento que apresenta cobranças de um serviço.'},
     {answer:'CREDITO',cross:1,clue:'Valor lançado como entrada na conta.'},
     {answer:'TARIFA',cross:1,clue:'Cobrança por um serviço financeiro.'},
@@ -94,7 +94,7 @@ const reinforcementActivities = [
     {answer:'OBJETIVO',cross:0,clue:'Meta que orienta uma decisão de planejamento.'},
     {answer:'RENDA',cross:0,clue:'Dinheiro que entra em determinado período.'},
     {answer:'CONTA',cross:0,clue:'Despesa ou cobrança que precisa ser planejada.'},
-    {answer:'META',cross:1,clue:'Resultado que uma pessoa pretende alcançar.'},
+    {answer:'META',cross:3,clue:'Resultado que uma pessoa pretende alcançar.'},
     {answer:'PLANEJAMENTO',cross:7,clue:'Organização antecipada de renda, gastos e objetivos.'},
     {answer:'RESERVA',cross:1,clue:'Valor separado para um objetivo ou imprevisto.'},
     {answer:'NECESSIDADE',cross:0,clue:'Algo importante para o bem-estar ou a rotina.'},
