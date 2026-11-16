@@ -118,21 +118,27 @@ const CLASS_NAME='7º C';
 const TOTAL_CHALLENGES=missions.reduce((sum,mission)=>sum+mission.challenges.length,0), TOTAL_SECONDS=90*60, MISSION_SECONDS=15*60, STORAGE_PREFIX='labDinheiro.session.v1.', SCRIPT_KEY='labDinheiro.scriptUrl', REPORT_QUEUE_KEY='labDinheiro.reportQueue.v1', SCRIPT_DEFAULT_URL='https://script.google.com/macros/s/AKfycby2Pjr_ooXxP7AXBTjMeggkWdwLjsPn6se_cXPJBiE9NtOAV4qfAOaqcfbT9CKOu3p14A/exec';
 let state=null, tickHandle=null, toastHandle=null, soundOn=false, soundContext=null, inFlightReports=new Set();
 const app=document.getElementById('app');
-function blockPastedReflectionText(event){
-  if(event.target&&event.target.id==='reflection'){
-    event.preventDefault();
-    showToast('Digite sua resposta pelo teclado. Colar texto não está disponível neste campo.');
-  }
+function isReflectionField(target){
+  return Boolean(target&&target.closest&&target.closest('#app textarea#reflection'));
 }
-app.addEventListener('paste',blockPastedReflectionText);
-app.addEventListener('drop',blockPastedReflectionText);
-app.addEventListener('beforeinput',event=>{if(event.target&&event.target.id==='reflection'&&/^insertFrom(Paste|Drop)$/i.test(event.inputType||''))blockPastedReflectionText(event)});
-app.addEventListener('keydown',event=>{
-  if(event.target&&event.target.id==='reflection'&&((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='v'||event.shiftKey&&event.key==='Insert')){
+function blockPastedReflectionText(event){
+  if(!isReflectionField(event.target))return;
+  event.preventDefault();
+  event.stopPropagation();
+  showToast('Digite sua resposta pelo teclado. Colar texto não está disponível neste campo.');
+}
+document.addEventListener('paste',blockPastedReflectionText,true);
+document.addEventListener('drop',blockPastedReflectionText,true);
+document.addEventListener('beforeinput',event=>{
+  if(isReflectionField(event.target)&&/^insertFromPaste|^insertFromDrop/i.test(event.inputType||''))blockPastedReflectionText(event);
+},true);
+document.addEventListener('keydown',event=>{
+  if(isReflectionField(event.target)&&(((event.ctrlKey||event.metaKey)&&String(event.key||'').toLowerCase()==='v')||(event.shiftKey&&event.key==='Insert'))){
     event.preventDefault();
+    event.stopPropagation();
     showToast('Digite sua resposta pelo teclado. Colar texto não está disponível neste campo.');
   }
-});
+},true);
 
 function freshState(name){return {name,startedAt:Date.now(),elapsed:0,activeMission:0,answers:[],missionStartedAt:Date.now(),missionElapsed:0,reviewDone:false,activitiesDone:[],miniGames:{},reportedMissions:[],reflections:{},completed:false,lastSaved:Date.now()}}
 function sessionKey(name){return STORAGE_PREFIX+encodeURIComponent(name||'')}
