@@ -126,6 +126,7 @@ function blockPastedReflectionText(event){
 }
 app.addEventListener('paste',blockPastedReflectionText);
 app.addEventListener('drop',blockPastedReflectionText);
+app.addEventListener('beforeinput',event=>{if(event.target&&event.target.id==='reflection'&&/^insertFrom(Paste|Drop)$/i.test(event.inputType||''))blockPastedReflectionText(event)});
 app.addEventListener('keydown',event=>{
   if(event.target&&event.target.id==='reflection'&&((event.ctrlKey||event.metaKey)&&event.key.toLowerCase()==='v'||event.shiftKey&&event.key==='Insert')){
     event.preventDefault();
@@ -274,7 +275,7 @@ function missionGateState(idx,reflection){
   return {canAdvance,message,validation};
 }
 function missionOnePromptMarkup(){
-  return '<div class="mission-one-task"><p>Use um exemplo fictício de uma pessoa ou família. Identifique seus membros e como trabalham; explique benefícios e/ou malefícios dessa forma de trabalho e da renda ou salário; informe o valor mensal; detalhe os gastos fixos e variáveis e explique por que recebem esses nomes. Para concluir, se o saldo ficar negativo, proponha uma ação para evitar outro mês no vermelho. Se ficar positivo, indique um destino para essa sobra.</p><ol class="reflection-rubric">'+MISSION_ONE_RUBRIC.map((item,i)=>'<li data-rubric="'+i+'"><span class="rubric-mark">○</span>'+escapeHtml(item.label)+'</li>').join('')+'</ol><div class="reflection-length"><span data-char-count>0</span> caracteres · mínimo de 500 caracteres para concluir a missão. De 500 a 800 já é suficiente; 800 a 1.500 permite detalhar mais.</div></div>';
+  return '<div class="mission-one-task"><p>Use um exemplo fictício de uma pessoa ou família. Identifique seus membros e como trabalham; explique benefícios e/ou malefícios dessa forma de trabalho e da renda ou salário; informe o valor mensal; detalhe os gastos fixos e variáveis e explique por que recebem esses nomes. Para concluir, se o saldo ficar negativo, proponha uma ação para evitar outro mês no vermelho. Se ficar positivo, indique um destino para essa sobra.</p><ol class="reflection-rubric">'+MISSION_ONE_RUBRIC.map((item,i)=>'<li data-rubric="'+i+'"><span class="rubric-mark">○</span>'+escapeHtml(item.label)+'</li>').join('')+'</ol><div class="reflection-length"><span data-char-count>0</span> caracteres · mínimo de 500 caracteres para concluir a missão. De 500 a 800 já é suficiente; 800 a 1.500 permite detalhar mais. Colagem desativada: digite sua resposta.</div></div>';
 }
 const MISSION_TWO_RUBRIC=[
   {label:'Identificou pelo menos duas entradas de dinheiro.',test:t=>{const n=normalizeRubricText(t);return [/salario/.test(n),/pix/.test(n),/venda/.test(n),/reembolso/.test(n),/(receb|entrada|ganhou)/.test(n)].filter(Boolean).length>=2}},
@@ -286,7 +287,7 @@ const MISSION_TWO_RUBRIC=[
 ];
 function validateMissionTwoReflection(value){return validateMissionRubric(value,MISSION_TWO_RUBRIC)}
 const MISSION_THREE_RUBRIC=[
-  {label:'Explicou que a dívida cresce ou se acumula com o atraso, os encargos e novos gastos.',test:t=>{const n=normalizeRubricText(t);return /(bola de neve|divida|debito|fatura)/.test(n)&&/(cres|aument|acumul|fica maior|mais dificil|encargo|juros|atras)/.test(n)}},
+  {label:'Explicou que a dívida cresce ou se acumula com o atraso, os encargos e novos gastos.',test:t=>{const n=normalizeRubricText(t);return /(bola de neve|divida|debito|fatura|saldo|valor devido|montante)/.test(n)&&/(cres|aument|acumul|fica maior|mais dificil|encargo|juros|atras)/.test(n)}},
   {label:'Calculou o total da fatura: R$ 1.075,00.',test:t=>hasAmount(t,1075,['mil e setenta e cinco','mil setenta e cinco'])},
   {label:'Reconheceu os R$ 91,88 anteriores e os R$ 55,12 de juros/multa.',test:t=>hasAmount(t,91.88,['noventa e um reais e oitenta e oito centavos'])&&hasAmount(t,55.12,['cinquenta e cinco reais e doze centavos'])},
   {label:'Explicou que pagar a fatura completa no prazo evita juros e multa.',test:t=>{const n=normalizeRubricText(t);return /(juros|multa|encargos)/.test(n)&&/(pag\\w*.{0,100}(integral|total|toda a fatura|vencimento|prazo|em dia)|(?:integral|total|toda a fatura|vencimento|prazo|em dia).{0,100}pag\\w*)/.test(n)}},
@@ -311,7 +312,7 @@ const MISSION_SIX_RUBRIC=[
   {label:'Identificou a renda mensal de R$ 2.400,00.',test:t=>hasAmount(t,2400,['dois mil e quatrocentos','dois mil quatrocentos'])&&/(renda|receb|salario|entrada)/i.test(normalizeRubricText(t))},
   {label:'Somou os gastos fixos em R$ 1.170,00 e explicou que se repetem.',test:t=>hasAmount(t,1170,['mil cento e setenta'])&&/(fix|aluguel|internet|transporte)/i.test(normalizeRubricText(t))&&/(mensal|todo mes|repet|recorrent|fix)/i.test(normalizeRubricText(t))},
   {label:'Somou os gastos variáveis em R$ 1.390,00 e explicou por que podem mudar.',test:t=>hasAmount(t,1390,['mil trezentos e noventa'])&&/(vari|mercado|energia|lazer|roupa)/i.test(normalizeRubricText(t))&&/(mud|consumo|necessidade|depende|vari|pode aumentar|pode diminuir)/i.test(normalizeRubricText(t))},
-  {label:'Concluiu que as despesas são R$ 2.560,00 e o saldo fica negativo em R$ 160,00.',test:t=>hasAmount(t,2560,['dois mil quinhentos e sessenta'])&&hasAmount(t,160,['cento e sessenta'])&&/(negativ|deficit|falt|vermelho|devendo|despesas superam|gastou mais|nao fecha|nao fecha as contas)/i.test(normalizeRubricText(t))},
+  {label:'Concluiu que as despesas são R$ 2.560,00 e o saldo fica negativo em R$ 160,00.',test:t=>hasAmount(t,2560,['dois mil quinhentos e sessenta'])&&hasAmount(t,160,['cento e sessenta'])&&/(negativ|deficit|falt|vermelho|devendo|preju|saldo menor|despesas superam|gastou mais|acima da renda|passou da renda|superou a renda|nao fecha)/i.test(normalizeRubricText(t))},
   {label:'Propôs uma redução concreta para equilibrar as contas no próximo mês.',test:t=>/(reduz|cort|diminu|econom|ajust|rever|limitar)/i.test(normalizeRubricText(t))&&/(lazer|roupa|vestuario|mercado|gasto|despesa)/i.test(normalizeRubricText(t))&&(hasAmount(t,160,['cento e sessenta'])||(hasAmount(t,100,['cem'])&&hasAmount(t,60,['sessenta']))||/(equilibr|fechar|zerar|cobrir).{0,60}(orcamento|contas|deficit|saldo)/i.test(normalizeRubricText(t)))},
   {label:'Escreveu uma explicação em texto corrido.',test:t=>isNarrativeResponse(t)}
 ];
