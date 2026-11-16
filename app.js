@@ -290,7 +290,7 @@ const MISSION_THREE_RUBRIC=[
   {label:'Explicou que a dívida cresce ou se acumula com o atraso, os encargos e novos gastos.',test:t=>{const n=normalizeRubricText(t);return /(bola de neve|divida|debito|fatura|saldo|valor devido|montante)/.test(n)&&/(cres|aument|acumul|fica maior|mais dificil|encargo|juros|atras)/.test(n)}},
   {label:'Calculou o total da fatura: R$ 1.075,00.',test:t=>hasAmount(t,1075,['mil e setenta e cinco','mil setenta e cinco'])},
   {label:'Reconheceu os R$ 91,88 anteriores e os R$ 55,12 de juros/multa.',test:t=>hasAmount(t,91.88,['noventa e um reais e oitenta e oito centavos'])&&hasAmount(t,55.12,['cinquenta e cinco reais e doze centavos'])},
-  {label:'Explicou que pagar a fatura completa no prazo evita juros e multa.',test:t=>{const n=normalizeRubricText(t);return /(juros|multa|encargos)/.test(n)&&/(pag\\w*.{0,100}(integral|total|toda a fatura|vencimento|prazo|em dia)|(?:integral|total|toda a fatura|vencimento|prazo|em dia).{0,100}pag\\w*)/.test(n)}},
+  {label:'Explicou que pagar a fatura completa no prazo evita juros e multa.',test:t=>{const n=normalizeRubricText(t);return /(juros|multa|encargos)/.test(n)&&/(pag\w*.{0,100}(integral|total|toda a fatura|vencimento|prazo|em dia)|(?:integral|total|toda a fatura|vencimento|prazo|em dia).{0,100}pag\w*)/.test(n)}},
   {label:'Sugeriu uma forma de controlar ou reduzir a dívida nos próximos meses.',test:t=>/(control|planej|orcamento|evit|reduz|cort|negoci|renegoci|pag|compras|acompanhar|organizar)/i.test(normalizeRubricText(t))},
   {label:'Escreveu uma explicação em texto corrido.',test:t=>isNarrativeResponse(t)}
 ];
@@ -302,10 +302,10 @@ const MISSION_FOUR_RUBRIC=[
   {label:'Escreveu uma explicação em texto corrido.',test:t=>isNarrativeResponse(t)}
 ];
 const MISSION_FIVE_RUBRIC=[
-  {label:'Calculou 15% de R$ 240,00 como R$ 36,00.',test:t=>/(15\\s*%|quinze por cento)/i.test(normalizeRubricText(t))&&hasAmount(t,240,['duzentos e quarenta'])&&hasAmount(t,36,['trinta e seis'])},
+  {label:'Calculou 15% de R$ 240,00 como R$ 36,00.',test:t=>/(15\s*%|quinze por cento)/i.test(normalizeRubricText(t))&&hasAmount(t,240,['duzentos e quarenta'])&&hasAmount(t,36,['trinta e seis'])},
   {label:'Encontrou o preço com desconto da Loja A: R$ 204,00.',test:t=>hasAmount(t,204,['duzentos e quatro'])},
   {label:'Comparou as lojas e identificou que a Loja A é R$ 11,00 mais barata.',test:t=>hasAmount(t,215,['duzentos e quinze'])&&hasAmount(t,11,['onze'])&&/(loja a|a custa|204|menor|mais barato|econom|compensa)/i.test(normalizeRubricText(t))},
-  {label:'Explicou que o desconto percentual usa o preço/valor inicial como base.',test:t=>/(porcent|percentual|15\\s*%|quinze por cento)/i.test(normalizeRubricText(t))&&/(preco inicial|valor inicial|240|base|valor original|preco original|sobre o preco)/i.test(normalizeRubricText(t))},
+  {label:'Explicou que o desconto percentual usa o preço/valor inicial como base.',test:t=>/(porcent|percentual|15\s*%|quinze por cento)/i.test(normalizeRubricText(t))&&/(preco inicial|valor inicial|240|base|valor original|preco original|sobre o preco)/i.test(normalizeRubricText(t))},
   {label:'Justificou a escolha considerando o preço final em texto corrido.',test:t=>/(escolh|decid|compensa|vantaj|menor|barat|custo|econom)/i.test(normalizeRubricText(t))&&isNarrativeResponse(t)}
 ];
 const MISSION_SIX_RUBRIC=[
